@@ -84,8 +84,16 @@ while roughly halving throughput and nearly quadrupling parameter count. On a Ra
 this gap decides whether the system runs at all.
 
 End-to-end pipeline throughput (capture → preprocess → detect → score → geo-tag → snapshot) on the
-sample clip is ~12 FPS wall-clock, reported by `scripts/run_demo.py`. That is the honest figure for
-the whole system, not the detector in isolation.
+sample clip, as reported by `scripts/run_demo.py`:
+
+| Environment | End-to-end FPS |
+|---|---|
+| Host, GPU (MPS) | ~10–12 |
+| Docker container, CPU only | ~4 |
+
+These are the honest figures for the whole system rather than the detector in isolation, and the gap
+between them is the cost of decode, scoring and snapshot writing plus the absence of GPU passthrough
+in the container. Both comfortably exceed the 2–5 FPS a dashcam pipeline actually samples at.
 
 ---
 

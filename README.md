@@ -76,7 +76,7 @@ model/                    Stages 1-5 + 8: detection, scoring, geo-tagging, train
   weights/                Checkpoints (git-ignored; see "Training")
 backend/                  Stage 6-7: FastAPI service, MongoDB layer, tests
   app/{api,core,db,models,services}/
-  tests/                  152 tests
+  tests/                  172 tests
 frontend/                 Stage 7: React + Vite dashboard, Leaflet map, Recharts
 data/                     Dataset prep scripts (never raw data) and the demo clip
   scripts/prepare_rdd2022.py         RDD2022 (VOC) -> YOLO, seeded split
@@ -201,7 +201,7 @@ firing on tar patches and shadows.
 ## Testing
 
 ```bash
-make test     # 152 tests
+make test     # 172 tests
 ```
 
 Covers the severity scoring (monotonicity, weight normalisation, threshold partitioning,
