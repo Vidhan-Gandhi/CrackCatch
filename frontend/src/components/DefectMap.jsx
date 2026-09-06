@@ -31,6 +31,7 @@ export default function DefectMap({
   const mapRef = useRef(null)
   const markerLayerRef = useRef(null)
   const heatLayerRef = useRef(null)
+  const legendRef = useRef(null)
   const [layer, setLayer] = useState(defaultLayer)
 
   // --- create the map once ---
@@ -44,10 +45,15 @@ export default function DefectMap({
       preferCanvas: true, // canvas rendering keeps hundreds of pins smooth
     })
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // OpenStreetMap standard tiles: keyless and unrestricted for a prototype.
+    // CARTO's dark basemap now gates its CDN and stamps "API KEY REQUIRED"
+    // across every tile, which is worse than useless in a demo. The dark
+    // treatment is applied instead by a CSS filter on the tile pane (see
+    // .leaflet-tile-pane in styles.css), which leaves markers untouched.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: 20,
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
     }).addTo(map)
 
     markerLayerRef.current = L.layerGroup().addTo(map)
@@ -55,10 +61,7 @@ export default function DefectMap({
     const legend = L.control({ position: 'bottomright' })
     legend.onAdd = () => {
       const div = L.DomUtil.create('div', 'map-legend')
-      div.innerHTML =
-        Object.entries(SEVERITY_COLORS)
-          .map(([name, colour]) => `<div class="row"><i style="background:${colour}"></i>${name}</div>`)
-          .join('') + '<div class="row faint">size = repair priority</div>'
+      legendRef.current = div
       return div
     }
     legend.addTo(map)
@@ -142,6 +145,29 @@ export default function DefectMap({
       gradient: HEAT_GRADIENT,
     }).addTo(map)
   }, [heatCells, layer])
+
+  // --- the legend must describe the layer actually on screen ---
+  // A severity/pin key shown over a heat layer misreads the map: the heat
+  // colours encode damage density, not the severity of one defect.
+  useEffect(() => {
+    const div = legendRef.current
+    if (!div) return
+    if (layer === 'heat') {
+      const stops = Object.entries(HEAT_GRADIENT)
+        .map(([stop, colour]) => `${colour} ${Number(stop) * 100}%`)
+        .join(', ')
+      div.innerHTML =
+        '<div style="font-weight:600;margin-bottom:4px">Road health</div>' +
+        `<div style="height:9px;border-radius:5px;background:linear-gradient(90deg, ${stops})"></div>` +
+        '<div class="row faint" style="justify-content:space-between"><span>healthy</span><span>failing</span></div>' +
+        '<div class="row faint">severity-weighted density</div>'
+    } else {
+      div.innerHTML =
+        Object.entries(SEVERITY_COLORS)
+          .map(([name, colour]) => `<div class="row"><i style="background:${colour}"></i>${name}</div>`)
+          .join('') + '<div class="row faint">size = repair priority</div>'
+    }
+  }, [layer])
 
   // --- keep the viewport over the data ---
   const fitKey = useMemo(

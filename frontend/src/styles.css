@@ -172,7 +172,20 @@ table.data tbody tr.selected { background: rgba(56, 189, 248, 0.12); }
 
 .map-wrap { height: 520px; width: 100%; }
 .map-wrap.tall { height: 640px; }
-.leaflet-container { background: #08101f; height: 100%; width: 100%; font: inherit; }
+/* Leaflet adds .leaflet-container to the SAME element that carries
+   .map-wrap, so sizing must NOT be repeated here: an equal-specificity
+   `height: 100%` declared after .map-wrap wins, resolves against an
+   auto-height parent, and collapses the map to zero height. .map-wrap is the
+   single source of truth for map dimensions. */
+.leaflet-container { background: #08101f; font: inherit; }
+
+/* Dark basemap without a paid tile provider: invert OSM's light tiles and
+   rotate the hue back so water stays blue and parks stay green. Applied to
+   the tile pane only, so defect markers, the legend and popups keep their
+   true severity colours. */
+.leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88) saturate(0.85);
+}
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
   background: var(--bg-panel); color: var(--text); border: 1px solid var(--border);
 }
