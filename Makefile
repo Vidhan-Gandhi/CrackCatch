@@ -40,7 +40,7 @@ dataset:  ## Generate the offline synthetic training set
 
 train:  ## Fine-tune YOLOv8 on the synthetic set (see README for RDD2022)
 	$(PY) model/scripts/train.py --data data/synthetic_yolo/data.yaml \
-	  --base model/weights/yolov8n.pt --epochs 30
+	  --base yolov8n.pt --epochs 30
 
 evaluate:  ## mAP, per-class P/R, confusion matrix, achieved FPS
 	$(PY) model/scripts/evaluate.py --data data/synthetic_yolo/data.yaml \
@@ -48,7 +48,7 @@ evaluate:  ## mAP, per-class P/R, confusion matrix, achieved FPS
 
 benchmark:  ## Speed/size ablation across checkpoints and devices
 	$(PY) model/scripts/benchmark_fps.py \
-	  --weights model/weights/crackcatch.pt model/weights/yolov8s.pt
+	  --weights model/weights/crackcatch.pt yolov8s.pt
 
 demo:  ## Replay the sample clip end to end (uses the backend if it is up)
 	$(PY) scripts/run_demo.py

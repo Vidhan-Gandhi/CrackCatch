@@ -32,3 +32,6 @@ data/samples/*.mp4
 
 # Ultralytics scratch output
 runs/
+
+# Checkpoints Ultralytics downloads on demand into the cwd
+/*.pt

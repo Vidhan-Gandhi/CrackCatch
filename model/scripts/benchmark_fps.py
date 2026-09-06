@@ -95,10 +95,36 @@ def main() -> int:
     print("-" * 78)
 
     for weight_path in args.weights:
-        path = Path(weight_path).expanduser().resolve()
+        path = Path(weight_path).expanduser()
         if not path.exists():
+            # A bare name like "yolov8s.pt" is resolved (and downloaded on
+            # first use) by Ultralytics, so pass it through rather than
+            # refusing. Only a real path that is missing is an error.
+            if path.parent == Path("."):
+                rows_before = len(rows)
+                try:
+                    rows.append(bench(path, devices[0], args.imgsz, args.runs, args.warmup))
+                except Exception as exc:
+                    print(f"{path.name:<26}{'-':<8}  unavailable: {exc}", file=sys.stderr)
+                if len(rows) > rows_before:
+                    row = rows[-1]
+                    print(f"{row['weights']:<26}{row['device']:<8}"
+                          f"{row['params_millions']:>11.2f}{row['ms_per_frame']:>11.2f}"
+                          f"{row['fps']:>9.2f}")
+                    for device in devices[1:]:
+                        try:
+                            row = bench(path, device, args.imgsz, args.runs, args.warmup)
+                        except Exception as exc:
+                            print(f"{path.name:<26}{device:<8}  failed: {exc}", file=sys.stderr)
+                            continue
+                        rows.append(row)
+                        print(f"{row['weights']:<26}{row['device']:<8}"
+                              f"{row['params_millions']:>11.2f}{row['ms_per_frame']:>11.2f}"
+                              f"{row['fps']:>9.2f}")
+                continue
             print(f"{path.name:<26}{'-':<8}{'missing':>11}", file=sys.stderr)
             continue
+        path = path.resolve()
         for device in devices:
             try:
                 row = bench(path, device, args.imgsz, args.runs, args.warmup)
