@@ -1,0 +1,28 @@
+# Backend service (pipeline stage 6 storage + the API stage 7 consumes).
+# Pinned for the reproducibility requirement.
+fastapi==0.141.1
+uvicorn[standard]==0.42.0
+python-multipart==0.0.20
+pydantic==2.12.4
+pydantic-settings==2.13.1
+
+# Storage
+motor==3.7.1
+pymongo==4.15.4
+mongomock-motor==0.0.36   # in-process fallback so a demo survives a dead Mongo
+
+# Reporting
+reportlab==4.4.4
+Pillow==12.0.0
+
+# Detection stack (shared with /model)
+numpy==2.2.6
+opencv-python-headless==4.12.0.88
+ultralytics==8.4.142
+torch==2.9.1
+torchvision==0.24.1
+
+# Tests
+pytest==9.1.1
+pytest-asyncio==1.4.0
+httpx==0.28.1

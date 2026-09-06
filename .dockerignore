@@ -1,0 +1,13 @@
+.venv/
+**/__pycache__/
+**/*.pyc
+.git/
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+model/runs/
+data/synthetic_yolo/
+data/rdd2022_yolo/
+data/feedback_yolo/
+storage/
+*.log
