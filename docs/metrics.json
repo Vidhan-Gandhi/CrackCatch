@@ -1,5 +1,5 @@
 {
-  "evaluated_at": "2026-09-06T08:09:05.224886+00:00",
+  "evaluated_at": "2026-09-06T08:41:47.596219+00:00",
   "weights": "/Users/akshay/Downloads/CrackCatch/model/weights/crackcatch.pt",
   "dataset": "/Users/akshay/Downloads/CrackCatch/data/synthetic_yolo/data.yaml",
   "split": "val",
@@ -49,20 +49,20 @@
   "speed": {
     "device": "mps",
     "runs": 30,
-    "ms_per_frame": 7.77,
-    "fps": 128.65
+    "ms_per_frame": 8.32,
+    "fps": 120.14
   },
   "speed_cpu": {
     "device": "cpu",
     "runs": 10,
-    "ms_per_frame": 36.35,
-    "fps": 27.51
+    "ms_per_frame": 39.4,
+    "fps": 25.38
   },
   "ultralytics_speed_ms": {
-    "preprocess": 0.20428402543378374,
-    "inference": 3.859033324988559,
-    "loss": 5.6941401756679014e-05,
-    "postprocess": 5.962970141505745
+    "preprocess": 0.17911907537685084,
+    "inference": 4.859009724168573,
+    "loss": 5.554999612892668e-05,
+    "postprocess": 5.721551400104848
   },
-  "plots_dir": "/Users/akshay/Downloads/CrackCatch/runs/detect/val"
+  "plots_dir": "/Users/akshay/Downloads/CrackCatch/model/runs/val_crackcatch"
 }
