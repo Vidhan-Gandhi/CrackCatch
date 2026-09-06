@@ -201,7 +201,8 @@ firing on tar patches and shadows.
 ## Testing
 
 ```bash
-make test     # 172 tests
+make test        # 172 unit/integration tests
+make ui-test     # headless browser smoke test (needs the stack running)
 ```
 
 Covers the severity scoring (monotonicity, weight normalisation, threshold partitioning,
@@ -211,6 +212,12 @@ export), every API endpoint (including path-traversal rejection, role enforcemen
 WebSocket feed), and the pipeline (preprocessing round-trips, deduplication, source dispatch).
 
 Tests run against an in-process database — no Docker, no network.
+
+`make ui-test` additionally renders every route in a headless Chromium-family browser (Brave,
+Chrome or Chromium — whichever is installed) and asserts what a build cannot: that the map has a
+non-zero size, that basemap tiles actually load, that the table renders rows, and that no uncaught
+exception or blocked request appears. It exists because a CSS regression once collapsed the Leaflet
+map to zero height while every unit test passed, the bundle built, and every route returned 200.
 
 ---
 

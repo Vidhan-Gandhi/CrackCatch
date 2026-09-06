@@ -10,7 +10,7 @@ PYTEST  := .venv/bin/pytest
 export PYTHONPATH := backend:model
 
 .PHONY: help setup venv deps frontend-deps sample dataset train evaluate benchmark \
-        demo demo-local backend dashboard up down logs test lint clean reset-db
+        demo demo-local backend dashboard up down logs test ui-test lint clean reset-db
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -76,6 +76,9 @@ logs:  ## Tail container logs
 
 test:  ## Run the test suite
 	$(PYTEST) backend/tests -q -c backend/pytest.ini
+
+ui-test:  ## Headless browser smoke test against a running stack
+	node scripts/ui_smoke_test.mjs --shots /tmp/crackcatch-shots
 
 lint:  ## Lint the dashboard sources
 	cd frontend && npm run lint || true
