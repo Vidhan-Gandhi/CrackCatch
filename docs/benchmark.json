@@ -1,0 +1,41 @@
+{
+  "benchmarked_at": "2026-09-06T08:10:23.194561+00:00",
+  "results": [
+    {
+      "weights": "crackcatch.pt",
+      "device": "cpu",
+      "imgsz": 640,
+      "params_millions": 3.01,
+      "runs": 25,
+      "ms_per_frame": 39.14,
+      "fps": 25.55
+    },
+    {
+      "weights": "crackcatch.pt",
+      "device": "mps",
+      "imgsz": 640,
+      "params_millions": 3.01,
+      "runs": 25,
+      "ms_per_frame": 8.84,
+      "fps": 113.17
+    },
+    {
+      "weights": "yolov8s.pt",
+      "device": "cpu",
+      "imgsz": 640,
+      "params_millions": 11.17,
+      "runs": 25,
+      "ms_per_frame": 63.07,
+      "fps": 15.86
+    },
+    {
+      "weights": "yolov8s.pt",
+      "device": "mps",
+      "imgsz": 640,
+      "params_millions": 11.17,
+      "runs": 25,
+      "ms_per_frame": 17.71,
+      "fps": 56.47
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "evaluated_at": "2026-09-06T08:09:05.224886+00:00",
+  "weights": "/Users/akshay/Downloads/CrackCatch/model/weights/crackcatch.pt",
+  "dataset": "/Users/akshay/Downloads/CrackCatch/data/synthetic_yolo/data.yaml",
+  "split": "val",
+  "imgsz": 640,
+  "overall": {
+    "mAP50": 0.9945,
+    "mAP50_95": 0.8937,
+    "precision": 0.9902,
+    "recall": 0.9973
+  },
+  "per_class": {
+    "pothole": {
+      "precision": 0.9977,
+      "recall": 1.0,
+      "mAP50": 0.995,
+      "mAP50_95": 0.9655
+    },
+    "crack": {
+      "precision": 0.9827,
+      "recall": 0.9946,
+      "mAP50": 0.9941,
+      "mAP50_95": 0.8218
+    }
+  },
+  "confusion_matrix": [
+    [
+      209.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      185.0,
+      20.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "pothole",
+    "crack",
+    "background"
+  ],
+  "speed": {
+    "device": "mps",
+    "runs": 30,
+    "ms_per_frame": 7.77,
+    "fps": 128.65
+  },
+  "speed_cpu": {
+    "device": "cpu",
+    "runs": 10,
+    "ms_per_frame": 36.35,
+    "fps": 27.51
+  },
+  "ultralytics_speed_ms": {
+    "preprocess": 0.20428402543378374,
+    "inference": 3.859033324988559,
+    "loss": 5.6941401756679014e-05,
+    "postprocess": 5.962970141505745
+  },
+  "plots_dir": "/Users/akshay/Downloads/CrackCatch/runs/detect/val"
+}
