@@ -9,4 +9,4 @@ PyYAML==6.0.3
 tqdm==4.67.1
 matplotlib==3.10.7
 seaborn==0.13.2
-pandas==2.3.4
+pandas==2.3.3
